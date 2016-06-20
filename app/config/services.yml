@@ -7,26 +7,52 @@ services:
 
 # Examples of API resource mapping, learn more at
 # https://github.com/dunglas/DunglasApiBundle
-    resource.book:
+    resource.user:
         parent:    "api.resource"
-        arguments: [ "AppBundle\\Entity\\Book" ]
-        tags:      [ { name: "api.resource" } ]
-
-    resource.person:
-        parent:    "api.resource"
-        arguments: [ "AppBundle\\Entity\\Person" ]
-        tags:      [ { name: "api.resource" } ]
-
-    resource.organization:
-        parent:    "api.resource"
-        arguments: [ "AppBundle\\Entity\\Organization" ]
+        arguments: [ "UserBundle\\Entity\\User" ]
         calls:
-            -      [ "initFilters", [ [ "@resource.organization.filter" ] ] ]
+            -      method:    "initNormalizationContext"
+                   arguments: [ { groups: [ "user_read" ] } ]
+            -      method:    "initDenormalizationContext"
+                   arguments: [ { groups: [ "user_write" ] } ]
+            -      method:    "initFilters"
+                   arguments: [ [ "@resource.user.search_filter" ] ]
         tags:      [ { name: "api.resource" } ]
-
-    resource.organization.filter:
+    
+    resource.user.search_filter:
         parent:    "api.doctrine.orm.search_filter"
-        arguments: [ { "name": "exact", "url": "partial" } ]
+        arguments: [ { id: "exact", name: "word_start", roles: "exact"  } ]
+        
+    app.jwt_token_authenticator:
+        class: AppBundle\Security\JwtAuthenticator
+        arguments: ['@doctrine.orm.entity_manager', '@lexik_jwt_authentication.encoder']
+    
+    kernel.event_listener.json_request_transformer:
+        class: Qandidate\Common\Symfony\HttpKernel\EventListener\JsonRequestTransformerListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 100 }
+    
+    app.event.jwt_response_listener:
+        class: AppBundle\EventListener\JWTResponseListener
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+        arguments: [ '@service_container' ]
+
+#    resource.person:
+#        parent:    "api.resource"
+#        arguments: [ "AppBundle\\Entity\\Person" ]
+#        tags:      [ { name: "api.resource" } ]
+#
+#    resource.organization:
+#        parent:    "api.resource"
+#        arguments: [ "AppBundle\\Entity\\Organization" ]
+#        calls:
+#            -      [ "initFilters", [ [ "@resource.organization.filter" ] ] ]
+#        tags:      [ { name: "api.resource" } ]
+#
+#    resource.organization.filter:
+#        parent:    "api.doctrine.orm.search_filter"
+#        arguments: [ { "name": "exact", "url": "partial" } ]
 
 # A typical service
 #    service_name:
