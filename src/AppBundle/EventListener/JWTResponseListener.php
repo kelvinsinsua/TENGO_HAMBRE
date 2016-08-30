@@ -4,7 +4,9 @@ namespace AppBundle\EventListener;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Component\Security\Core\User\UserInterface;
-use AppBundle\Repository\AppMenuRepositories;
+use Symfony\Component\DependencyInjection\Container;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * JWTResponseListener
  *
@@ -17,6 +19,16 @@ class JWTResponseListener
      *
      * @param AuthenticationSuccessEvent $event
      */
+    
+    protected $em;
+    protected $container;
+    private $requestStack;
+
+    function __construct(Container $container, EntityManager $em,RequestStack $requestStack) {
+        $this->em = $em;
+        $this->container = $container;
+        $this->requestStack = $requestStack;
+    }
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event)
     {
         $data = $event->getData();
@@ -31,7 +43,7 @@ class JWTResponseListener
         $data['data'] = array(
             'username' => $user->getUsername(),
             'roles'    => $user->getRoles(),
-            'user_iri' => $event->getRequest()->getBaseUrl()."/api/users/".$user->getId(),
+            'user_iri' => $this->requestStack->getCurrentRequest()->getBaseUrl() . "/api/users/" . $user->getId(),
             //'menu'     => $userMenu,
                 
         );

@@ -1,0 +1,52 @@
+{% block subject %}
+    Confirmar Email
+{% endblock %}
+
+{% block body_html %}
+    <html>
+        <header>
+            <link href='https://fonts.googleapis.com/css?family=Open+Sans:600italic' rel='stylesheet' type='text/css'>
+        </header>
+        <body style='font-family: Open Sans; background-color: #DCDCDC;padding: 18px;'>
+            <div style='; background-color: floralwhite;width: 100%;height: 480px;'>
+                <div style="background:gray;width: 100%">
+                    <img style="max-height: 59px; " src="http://pase.fit/wp-content/uploads/2016/05/logo.png" 
+                         alt="Pase.Fit" > </img>
+                </div>
+                <div style='margin:30px;'>
+
+
+
+
+
+                    <p style='font-weight: bold;font-size: 18px;'>Estimado/a {{ user.username }}. </p>                                               
+
+                    <p style="font-size: 18px;">Gracias por haber escogido Pase.Fit! Hemos recibido su solicitud de registro, 
+                        para confirmar su email, por favor haga click en el siguiente Bonton:                                                                    
+                    </p>
+                    <a style='border: 1px solid #dedede;
+                       border-radius: 3px;
+                       background-color: gray;
+                       color: #ffffff;
+                       display: inline-block;
+                       font: 17px/17px HelveticaNeue, Arial;
+                       padding: 8px;
+                       line-height: 25px;
+                       text-decoration: none;height: 25px;' href='{{ confirmationUrl }}' target="_blank">Confirmar Email</a>
+                    <p style="font-size: 18px;">O copie y pegue el siguiente link en su navegador:                                                                    
+                        <a target="_blank" href="{{ confirmationUrl }}">{{ confirmationUrl }}</a>
+                    </p>
+
+                    <p style="font-size: 18px;"> Si ha recibido este correo electrónico por error ignore este mensaje.   </p>                                                                                               
+                    <center><p style="font-size: 18px;">        *****    </p></center>                                                       
+
+                    <center><p style="font-size: 18px;">Gracias, el equipo de <strong style="color: gray">Pase.Fit!</strong></p></center>
+
+
+
+                </div>
+            </div>
+
+        </body>
+    </html>
+{% endblock %}

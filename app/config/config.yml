@@ -102,6 +102,27 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: UserBundle\Entity\User
+    registration:        
+        form:
+            type:    user_registration
+            handler: user.registration.form.handler
+        confirmation:
+            enabled: true
+            template:  UserBundle:Registration:confirmationEmail.html.twig  
+            from_email:
+                address:        noreply@tengohambre.com
+                sender_name:    Tengo Hambre
+    resetting:        
+        form:
+            type:    user_resetting
+            handler: user.resetting.form.handler
+        email:
+            template:  UserBundle:Resetting:resettingPassword.html.twig  
+            from_email:
+                address:        noreply@tengohambre.com
+                sender_name:    Tengo Hambre
+    service:
+        mailer: fos_user.mailer.twig_swift
 
 fos_rest:
     format_listener:
