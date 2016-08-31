@@ -22,6 +22,35 @@ services:
     resource.user.search_filter:
         parent:    "api.doctrine.orm.search_filter"
         arguments: [ { id: "exact", name: "word_start", roles: "exact"  } ]
+    
+    resource.restaurant:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\Restaurant" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.menu:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\Menu" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.plate:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\Plate" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.ingredient:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\Ingredient" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.schedule:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\Schedule" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.aditional:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\Aditional" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.client:
+        parent:    "api.resource"
+        arguments: [ "UserBundle\\Entity\\Client" ]
+        tags:      [ { name: "api.resource" } ]
         
     app.jwt_token_authenticator:
         class: AppBundle\Security\JwtAuthenticator

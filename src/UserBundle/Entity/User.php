@@ -59,4 +59,64 @@ class User extends BaseUser
      * @Groups({"user_read", "user_write"})
      */
     public $roles;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="RestaurantBundle\Entity\Restaurant", inversedBy="user")
+     * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id")
+     */
+       
+    private $restaurant;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Client", inversedBy="user")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     */
+       
+    private $client;
+
+    /**
+     * Set restaurant
+     *
+     * @param \RestaurantBundle\Entity\Restaurant $restaurant
+     * @return User
+     */
+    public function setRestaurant(\RestaurantBundle\Entity\Restaurant $restaurant = null)
+    {
+        $this->restaurant = $restaurant;
+
+        return $this;
+    }
+
+    /**
+     * Get restaurant
+     *
+     * @return \RestaurantBundle\Entity\Restaurant 
+     */
+    public function getRestaurant()
+    {
+        return $this->restaurant;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \UserBundle\Entity\Client $client
+     * @return User
+     */
+    public function setClient(\UserBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \UserBundle\Entity\Client 
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
 }
