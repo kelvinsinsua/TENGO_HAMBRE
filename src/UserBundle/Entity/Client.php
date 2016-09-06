@@ -69,7 +69,18 @@ class Client
      */
        
     private $user;
-
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Preference", mappedBy="client")
+     */
+    
+    private $preference;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="\OrderBundle\Entity\Orden", mappedBy="client")
+     */
+    
+    private $orders;
     /**
      * Get id
      *
@@ -239,5 +250,79 @@ class Client
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->preference = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add preference
+     *
+     * @param \UserBundle\Entity\Preference $preference
+     * @return Client
+     */
+    public function addPreference(\UserBundle\Entity\Preference $preference)
+    {
+        $this->preference[] = $preference;
+
+        return $this;
+    }
+
+    /**
+     * Remove preference
+     *
+     * @param \UserBundle\Entity\Preference $preference
+     */
+    public function removePreference(\UserBundle\Entity\Preference $preference)
+    {
+        $this->preference->removeElement($preference);
+    }
+
+    /**
+     * Get preference
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPreference()
+    {
+        return $this->preference;
+    }
+
+    /**
+     * Add orders
+     *
+     * @param \OrderBundle\Entity\Order $orders
+     * @return Client
+     */
+    public function addOrder(\OrderBundle\Entity\Orden $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \OrderBundle\Entity\Order $orders
+     */
+    public function removeOrder(\OrderBundle\Entity\Orden $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

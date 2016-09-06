@@ -141,6 +141,11 @@ class Restaurant
      */
     
     private $aditionals;
+    /**
+     * @ORM\OneToMany(targetEntity="DrinkCategory", mappedBy="restaurant")
+     */
+    
+    private $drinkCategories;
     
     /**
      * @ORM\OneToOne(targetEntity="UserBundle\Entity\User", inversedBy="restaurant")
@@ -148,6 +153,12 @@ class Restaurant
      */
        
     private $user;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="\ParametersBundle\Entity\Amenity", inversedBy="restaurants")
+     * @ORM\JoinTable(name="studios_amenities")
+     */
+    protected $amenities;
 
 
     /**
@@ -634,5 +645,71 @@ class Restaurant
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Add amenities
+     *
+     * @param \ParametersBundle\Entity\Amenity $amenities
+     * @return Restaurant
+     */
+    public function addAmenity(\ParametersBundle\Entity\Amenity $amenities)
+    {
+        $this->amenities[] = $amenities;
+
+        return $this;
+    }
+
+    /**
+     * Remove amenities
+     *
+     * @param \ParametersBundle\Entity\Amenity $amenities
+     */
+    public function removeAmenity(\ParametersBundle\Entity\Amenity $amenities)
+    {
+        $this->amenities->removeElement($amenities);
+    }
+
+    /**
+     * Get amenities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAmenities()
+    {
+        return $this->amenities;
+    }
+
+    /**
+     * Add drinkCategories
+     *
+     * @param \RestaurantBundle\Entity\DrinkCategory $drinkCategories
+     * @return Restaurant
+     */
+    public function addDrinkCategory(\RestaurantBundle\Entity\DrinkCategory $drinkCategories)
+    {
+        $this->drinkCategories[] = $drinkCategories;
+
+        return $this;
+    }
+
+    /**
+     * Remove drinkCategories
+     *
+     * @param \RestaurantBundle\Entity\DrinkCategory $drinkCategories
+     */
+    public function removeDrinkCategory(\RestaurantBundle\Entity\DrinkCategory $drinkCategories)
+    {
+        $this->drinkCategories->removeElement($drinkCategories);
+    }
+
+    /**
+     * Get drinkCategories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDrinkCategories()
+    {
+        return $this->drinkCategories;
     }
 }

@@ -1,3 +1,13 @@
+order:
+    resource: "@OrderBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+parameters:
+    resource: "@ParametersBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 restaurant:
     resource: "@RestaurantBundle/Controller/"
     type:     annotation
