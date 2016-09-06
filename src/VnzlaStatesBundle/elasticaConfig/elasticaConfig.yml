@@ -1,0 +1,54 @@
+#fos_elastica:
+#    default_manager: mongodb
+#    clients:
+#        default: { host: localhost, port: 9200 }    
+#    indexes:
+#        app:
+#            types:                
+#                state:
+#                    mappings:
+#                        state: ~
+#                    persistence:
+#                        driver: orm
+#                        model: VnzlaStatesBundle\Entity\State
+#                        provider: ~
+#                        finder: ~
+#                        listener: ~
+#                        repository: VnzlaStatesBundle\Repository\StateRepository
+#                city:
+#                    mappings:
+#                        city: ~
+#                    _parent:
+#                        type : state
+#                    persistence:
+#                        driver: orm
+#                        model: VnzlaStatesBundle\Entity\City
+#                        provider: ~
+#                        finder: ~
+#                        listener: ~
+#                        repository: VnzlaStatesBundle\Repository\CityRepository
+#                municipalty:
+#                    mappings:
+#                        municipalty: ~
+#                    _parent:
+#                        type : state
+#                    persistence:
+#                        driver: orm
+#                        model: VnzlaStatesBundle\Entity\Municipalty
+#                        provider: ~
+#                        finder: ~
+#                        listener: ~
+#                        repository: VnzlaStatesBundle\Repository\MunicipaltyRepository
+#                parish:
+#                    mappings:
+#                        parish: ~
+#                    _parent:
+#                        type : municipalty
+#                    persistence:
+#                        driver: orm
+#                        model: VnzlaStatesBundle\Entity\Parish
+#                        provider: ~
+#                        finder: ~
+#                        listener: ~
+#                        repository: VnzlaStatesBundle\Repository\ParishRepository
+

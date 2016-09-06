@@ -1,0 +1,83 @@
+fos_elastica:
+    clients:
+            default: { host: localhost, port: 9200 }
+    indexes:        
+        tengo_hambre:
+            index_name: tengo_hambre
+            types:
+                restaurant:
+                    mappings:
+                        name: ~
+                        state: ~
+                        city: ~
+                        amenities:
+                            type: nested
+                            properties:
+                                id:
+                                    type: integer
+                        location:
+                            type: geo_point
+                    persistence:
+                        driver: orm
+                        model: RestaurantBundle\Entity\Restaurant
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                        repository: ElasticaBundle\SearchRepository\RestaurantRepository
+                menu:
+                    mappings:
+                        name: ~
+                        available: { type: boolean }
+                        menuCategory:
+                            type: object
+                            properties:
+                                id:
+                                    type: integer
+                    persistence:
+                        driver: orm
+                        model: RestaurantBundle\Entity\Menu
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                        repository: ElasticaBundle\SearchRepository\MenuRepository
+                plate:
+                    mappings:
+                        name: ~
+                        available: { type: boolean }
+                        price: ~
+                        menus:
+                            type: nested
+                            properties:
+                                id:
+                                    type: integer
+                    persistence:
+                        driver: orm
+                        model: RestaurantBundle\Entity\Plate
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                        repository: ElasticaBundle\SearchRepository\PlateRepository
+                state:
+                    mappings:
+                        state: ~
+                    persistence:
+                        driver: orm
+                        model: VnzlaStatesBundle\Entity\State
+                        provider: ~
+                        finder: ~
+                        listener: ~
+                        repository: VnzlaStatesBundle\Repository\StateRepository
+                city:
+                    mappings:
+                        city: ~
+                    _parent:
+                        type : state
+                    persistence:
+                        driver: orm
+                        model: VnzlaStatesBundle\Entity\City
+                        provider: ~
+                        finder: ~
+                        listener: ~
+                        repository: VnzlaStatesBundle\Repository\CityRepository
+                        
+            

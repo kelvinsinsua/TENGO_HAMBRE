@@ -1,3 +1,8 @@
+elastica:
+    resource: "@ElasticaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 order:
     resource: "@OrderBundle/Controller/"
     type:     annotation
@@ -27,3 +32,8 @@ NelmioApiDocBundle:
 
 fos_user:
     resource: "@UserBundle/Resources/config/routing/all.yml"
+    
+vnzla_states:
+    resource: "@VnzlaStatesBundle/Controller/"
+    type:     annotation
+    prefix:   /

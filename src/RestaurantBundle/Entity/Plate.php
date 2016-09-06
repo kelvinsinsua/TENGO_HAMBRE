@@ -57,11 +57,10 @@ class Plate
     private $price;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Menu", inversedBy="plates")
-     * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Menu", inversedBy="plates")
+     * @ORM\JoinTable(name="menu_plate")
      */
-       
-    private $menu;
+    protected $menus;
     
     /**
      * @ORM\OneToMany(targetEntity="Ingredient", mappedBy="plate")
@@ -203,29 +202,6 @@ class Plate
     }
 
     /**
-     * Set menu
-     *
-     * @param \RestaurantBundle\Entity\Menu $menu
-     * @return Plate
-     */
-    public function setMenu(\RestaurantBundle\Entity\Menu $menu = null)
-    {
-        $this->menu = $menu;
-
-        return $this;
-    }
-
-    /**
-     * Get menu
-     *
-     * @return \RestaurantBundle\Entity\Menu 
-     */
-    public function getMenu()
-    {
-        return $this->menu;
-    }
-
-    /**
      * Add ingredients
      *
      * @param \RestaurantBundle\Entity\Ingredient $ingredients
@@ -256,5 +232,38 @@ class Plate
     public function getIngredients()
     {
         return $this->ingredients;
+    }
+
+    /**
+     * Add menus
+     *
+     * @param \RestaurantBundle\Entity\Menu $menus
+     * @return Plate
+     */
+    public function addMenu(\RestaurantBundle\Entity\Menu $menus)
+    {
+        $this->menus[] = $menus;
+
+        return $this;
+    }
+
+    /**
+     * Remove menus
+     *
+     * @param \RestaurantBundle\Entity\Menu $menus
+     */
+    public function removeMenu(\RestaurantBundle\Entity\Menu $menus)
+    {
+        $this->menus->removeElement($menus);
+    }
+
+    /**
+     * Get menus
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMenus()
+    {
+        return $this->menus;
     }
 }

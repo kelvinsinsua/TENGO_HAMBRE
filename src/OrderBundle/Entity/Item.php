@@ -48,6 +48,17 @@ class Item
      */
        
     private $order;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Without", mappedBy="item")
+     */
+    
+    private $without;
+    /**
+     * @ORM\OneToMany(targetEntity="AditionalItem", mappedBy="item")
+     */
+    
+    private $aditionalItems;
 
 
     /**
@@ -150,5 +161,79 @@ class Item
     public function getOrder()
     {
         return $this->order;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->without = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->aditionalItems = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add without
+     *
+     * @param \OrderBundle\Entity\Without $without
+     * @return Item
+     */
+    public function addWithout(\OrderBundle\Entity\Without $without)
+    {
+        $this->without[] = $without;
+
+        return $this;
+    }
+
+    /**
+     * Remove without
+     *
+     * @param \OrderBundle\Entity\Without $without
+     */
+    public function removeWithout(\OrderBundle\Entity\Without $without)
+    {
+        $this->without->removeElement($without);
+    }
+
+    /**
+     * Get without
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWithout()
+    {
+        return $this->without;
+    }
+
+    /**
+     * Add aditionalItems
+     *
+     * @param \OrderBundle\Entity\AditionalItem $aditionalItems
+     * @return Item
+     */
+    public function addAditionalItem(\OrderBundle\Entity\AditionalItem $aditionalItems)
+    {
+        $this->aditionalItems[] = $aditionalItems;
+
+        return $this;
+    }
+
+    /**
+     * Remove aditionalItems
+     *
+     * @param \OrderBundle\Entity\AditionalItem $aditionalItems
+     */
+    public function removeAditionalItem(\OrderBundle\Entity\AditionalItem $aditionalItems)
+    {
+        $this->aditionalItems->removeElement($aditionalItems);
+    }
+
+    /**
+     * Get aditionalItems
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAditionalItems()
+    {
+        return $this->aditionalItems;
     }
 }

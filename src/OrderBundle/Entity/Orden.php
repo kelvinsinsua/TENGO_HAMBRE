@@ -66,17 +66,7 @@ class Orden
      * @ORM\OneToMany(targetEntity="Item", mappedBy="order")
      */
     
-    private $items;
-    /**
-     * @ORM\OneToMany(targetEntity="Without", mappedBy="order")
-     */
-    
-    private $without;
-    /**
-     * @ORM\OneToMany(targetEntity="AditionalItem", mappedBy="order")
-     */
-    
-    private $aditionalItems;
+    private $items;    
     
     /**
      * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\Client", inversedBy="orders")
@@ -274,72 +264,6 @@ class Orden
     public function getItems()
     {
         return $this->items;
-    }
-
-    /**
-     * Add without
-     *
-     * @param \OrderBundle\Entity\Without $without
-     * @return Orden
-     */
-    public function addWithout(\OrderBundle\Entity\Without $without)
-    {
-        $this->without[] = $without;
-
-        return $this;
-    }
-
-    /**
-     * Remove without
-     *
-     * @param \OrderBundle\Entity\Without $without
-     */
-    public function removeWithout(\OrderBundle\Entity\Without $without)
-    {
-        $this->without->removeElement($without);
-    }
-
-    /**
-     * Get without
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getWithout()
-    {
-        return $this->without;
-    }
-
-    /**
-     * Add aditionalItems
-     *
-     * @param \OrderBundle\Entity\AditionalItem $aditionalItems
-     * @return Orden
-     */
-    public function addAditionalItem(\OrderBundle\Entity\AditionalItem $aditionalItems)
-    {
-        $this->aditionalItems[] = $aditionalItems;
-
-        return $this;
-    }
-
-    /**
-     * Remove aditionalItems
-     *
-     * @param \OrderBundle\Entity\AditionalItem $aditionalItems
-     */
-    public function removeAditionalItem(\OrderBundle\Entity\AditionalItem $aditionalItems)
-    {
-        $this->aditionalItems->removeElement($aditionalItems);
-    }
-
-    /**
-     * Get aditionalItems
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAditionalItems()
-    {
-        return $this->aditionalItems;
     }
 
     /**

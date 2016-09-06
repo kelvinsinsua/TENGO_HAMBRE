@@ -23,12 +23,15 @@ class AppKernel extends Kernel
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
-            
+            new FOS\ElasticaBundle\FOSElasticaBundle(),
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
             new RestaurantBundle\RestaurantBundle(),
             new ParametersBundle\ParametersBundle(),
             new OrderBundle\OrderBundle(),
+            new ElasticaBundle\ElasticaBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new VnzlaStatesBundle\VnzlaStatesBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {

@@ -29,11 +29,11 @@ class Without
     private $name;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Orden", inversedBy="without")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="without")
+     * @ORM\JoinColumn(name="item_id", referencedColumnName="id")
      */
        
-    private $order;
+    private $item;
 
 
     /**
@@ -69,26 +69,28 @@ class Without
         return $this->name;
     }
 
+    
+
     /**
-     * Set order
+     * Set item
      *
-     * @param \OrderBundle\Entity\Orden $order
+     * @param \OrderBundle\Entity\Item $item
      * @return Without
      */
-    public function setOrder(\OrderBundle\Entity\Orden $order = null)
+    public function setItem(\OrderBundle\Entity\Item $item = null)
     {
-        $this->order = $order;
+        $this->item = $item;
 
         return $this;
     }
 
     /**
-     * Get order
+     * Get item
      *
-     * @return \OrderBundle\Entity\Orden 
+     * @return \OrderBundle\Entity\Item 
      */
-    public function getOrder()
+    public function getItem()
     {
-        return $this->order;
+        return $this->item;
     }
 }

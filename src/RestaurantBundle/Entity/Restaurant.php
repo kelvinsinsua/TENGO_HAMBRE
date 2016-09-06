@@ -24,105 +24,105 @@ class Restaurant
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
     private $address;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="state", type="integer")
+     * @ORM\Column(name="state", type="integer", nullable=true)
      */
     private $state;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="integer")
+     * @ORM\Column(name="city", type="integer", nullable=true)
      */
     private $city;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      */
     private $phone;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rif", type="string", length=255)
+     * @ORM\Column(name="rif", type="string", length=255, nullable=true)
      */
     private $rif;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255)
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
     private $image;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="logo", type="string", length=255)
+     * @ORM\Column(name="logo", type="string", length=255, nullable=true)
      */
     private $logo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="about", type="string", length=255)
+     * @ORM\Column(name="about", type="string", length=255, nullable=true)
      */
     private $about;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="web", type="string", length=255)
+     * @ORM\Column(name="web", type="string", length=255, nullable=true)
      */
     private $web;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="facebook", type="string", length=255)
+     * @ORM\Column(name="facebook", type="string", length=255, nullable=true)
      */
     private $facebook;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="twitter", type="string", length=255)
+     * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
      */
     private $twitter;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="bookingWindow", type="string", length=255)
+     * @ORM\Column(name="bookingWindow", type="string", length=255, nullable=true)
      */
     private $bookingWindow;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lat", type="string", length=255)
+     * @ORM\Column(name="lat", type="string", length=255, nullable=true)
      */
     private $lat;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lon", type="string", length=255)
+     * @ORM\Column(name="lon", type="string", length=255, nullable=true)
      */
     private $lon;
     
@@ -160,7 +160,13 @@ class Restaurant
      */
     protected $amenities;
 
-
+    
+    public function getLocation()
+    {
+        if($this->getLat()!=null){
+        return (string)($this->getLat().','.$this->getLon());
+        }
+    }
     /**
      * Get id
      *

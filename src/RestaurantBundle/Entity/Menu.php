@@ -50,10 +50,9 @@ class Menu
     private $restaurant;
     
     /**
-     * @ORM\OneToMany(targetEntity="Plate", mappedBy="menu")
+     * @ORM\ManyToMany(targetEntity="Plate", mappedBy="menus")
      */
-    
-    private $plates;
+     private $plates;
 
 
     /**
@@ -164,6 +163,8 @@ class Menu
     {
         return $this->restaurant;
     }
+
+    
 
     /**
      * Add plates
