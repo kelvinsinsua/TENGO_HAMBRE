@@ -33,6 +33,8 @@ fos_elastica:
                             properties:
                                 id:
                                     type: integer
+                    _parent:
+                        type: restaurant
                     persistence:
                         driver: orm
                         model: RestaurantBundle\Entity\Menu

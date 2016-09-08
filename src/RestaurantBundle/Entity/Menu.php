@@ -48,6 +48,12 @@ class Menu
      */
        
     private $restaurant;
+    /**
+     * @ORM\ManyToOne(targetEntity="\ParametersBundle\Entity\MenuCategory", inversedBy="menus")
+     * @ORM\JoinColumn(name="menu_category_id", referencedColumnName="id")
+     */
+       
+    private $menuCategory;
     
     /**
      * @ORM\ManyToMany(targetEntity="Plate", mappedBy="menus")
@@ -197,5 +203,28 @@ class Menu
     public function getPlates()
     {
         return $this->plates;
+    }
+
+    /**
+     * Set menuCategory
+     *
+     * @param \ParametersBundle\Entity\MenuCategory $menuCategory
+     * @return Menu
+     */
+    public function setMenuCategory(\ParametersBundle\Entity\MenuCategory $menuCategory = null)
+    {
+        $this->menuCategory = $menuCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get menuCategory
+     *
+     * @return \ParametersBundle\Entity\MenuCategory 
+     */
+    public function getMenuCategory()
+    {
+        return $this->menuCategory;
     }
 }

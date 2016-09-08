@@ -48,6 +48,11 @@ class Restaurant
      * @ORM\Column(name="city", type="integer", nullable=true)
      */
     private $city;
+    
+    private $stateName;
+
+    
+    private $cityName;
 
     /**
      * @var string
@@ -338,6 +343,50 @@ class Restaurant
     public function getAbout()
     {
         return $this->about;
+    }
+    /**
+     * Set about
+     *
+     * @param string $stateName
+     * @return Restaurant
+     */
+    public function setStateName($stateName)
+    {
+        $this->stateName = $stateName;
+
+        return $this;
+    }
+
+    /**
+     * Get about
+     *
+     * @return string 
+     */
+    public function getStateName()
+    {
+        return $this->stateName;
+    }
+    /**
+     * Set about
+     *
+     * @param string $cityName
+     * @return Restaurant
+     */
+    public function setCityName($cityName)
+    {
+        $this->cityName = $cityName;
+
+        return $this;
+    }
+
+    /**
+     * Get about
+     *
+     * @return string 
+     */
+    public function getCityName()
+    {
+        return $this->cityName;
     }
 
     /**
