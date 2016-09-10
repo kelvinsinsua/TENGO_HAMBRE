@@ -49,7 +49,7 @@ class OrdenController extends FOSRestController implements
         $order->setTotal(0);
         $em->persist($order);
         
-        
+        $total = 0;
         foreach($items as $i){
             $plate = $em->getRepository('RestaurantBundle:Plate')->find($i->getId());
             $item = new Item();
@@ -58,6 +58,7 @@ class OrdenController extends FOSRestController implements
             $item->setQuantity($i->getQuantity());
             $item->setOrder($order);
             $em->persist($item);
+            $total +=($plate->getPrice()*$i->getQuantity());
             
             foreach($i->getAditionals() as $add){
                 $adit = $em->getRepository('RestaurantBundle:Aditional')->find($add->getId());
@@ -67,6 +68,7 @@ class OrdenController extends FOSRestController implements
                 $aditional->setPrice($adit->getPrice());
                 $aditional->setQuiantity($add->getQuantity());
                 $em->persist($aditional);
+                 $total +=($adit->getPrice()*$add->getQuantity());
             }
             foreach($i->getWithout() as $w){
                 $wi = $em->getRepository('RestaurantBundle:Ingredient')->find($w->getId());
@@ -77,10 +79,9 @@ class OrdenController extends FOSRestController implements
                 
             }
         }
+        $order->setTotal($total);
         $em->flush();
         
-        
-//        $r = $this->encoder($plates);
         return new JsonResponse('Su Orden NO ha sido Registrada con Exito');
         }  catch (\Exception $e){
             return new JsonResponse('Su Orden NO ha sido Registrada');
