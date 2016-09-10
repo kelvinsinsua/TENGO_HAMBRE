@@ -55,6 +55,12 @@ class Plate
      * @ORM\Column(name="price", type="float")
      */
     private $price;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="reputationTotal", type="float")
+     */
+    private $reputationTotal;
     
     /**
      * @ORM\ManyToMany(targetEntity="Menu", inversedBy="plates")
@@ -67,6 +73,24 @@ class Plate
      */
     
     private $ingredients;
+    /**
+     * @ORM\OneToMany(targetEntity="ReputationPlate", mappedBy="plate")
+     */
+    
+    private $reputations;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Aditional", inversedBy="plates")
+     * @ORM\JoinTable(name="plates_aditionals")
+     */
+    protected $aditionals;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Combo", mappedBy="plates")
+     */
+     private $combos;
+    
+    
 
 
     /**
@@ -265,5 +289,152 @@ class Plate
     public function getMenus()
     {
         return $this->menus;
+    }
+
+    /**
+     * Add aditionals
+     *
+     * @param \RestaurantBundle\Entity\Aditional $aditionals
+     * @return Plate
+     */
+    public function addAditional(\RestaurantBundle\Entity\Aditional $aditionals)
+    {
+        $this->aditionals[] = $aditionals;
+
+        return $this;
+    }
+
+    /**
+     * Remove aditionals
+     *
+     * @param \RestaurantBundle\Entity\Aditional $aditionals
+     */
+    public function removeAditional(\RestaurantBundle\Entity\Aditional $aditionals)
+    {
+        $this->aditionals->removeElement($aditionals);
+    }
+
+    /**
+     * Get aditionals
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAditionals()
+    {
+        return $this->aditionals;
+    }
+    
+    /**
+     * 
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function setAditionals(array $aditionals)
+    {
+        $this->aditionals = array();
+
+        foreach ($aditionals as $aditional) {
+            $this->addAditional($aditional);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set reputationTotal
+     *
+     * @param float $reputationTotal
+     * @return Plate
+     */
+    public function setReputationTotal($reputationTotal)
+    {
+        $this->reputationTotal = $reputationTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get reputationTotal
+     *
+     * @return float 
+     */
+    public function getReputationTotal()
+    {
+        return $this->reputationTotal;
+    }
+
+    /**
+     * Add reputations
+     *
+     * @param \RestaurantBundle\Entity\ReputationPlate $reputations
+     * @return Plate
+     */
+    public function addReputation(\RestaurantBundle\Entity\ReputationPlate $reputations)
+    {
+        $this->reputations[] = $reputations;
+
+        return $this;
+    }
+
+    /**
+     * Remove reputations
+     *
+     * @param \RestaurantBundle\Entity\ReputationPlate $reputations
+     */
+    public function removeReputation(\RestaurantBundle\Entity\ReputationPlate $reputations)
+    {
+        $this->reputations->removeElement($reputations);
+    }
+
+    /**
+     * Get reputations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReputations()
+    {
+        return $this->reputations;
+    }
+    /**
+     * Get reputations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRestaurant()
+    {
+        return $this->getMenus()[0]->getRestaurant();
+    }
+
+    /**
+     * Add combos
+     *
+     * @param \RestaurantBundle\Entity\Combo $combos
+     * @return Plate
+     */
+    public function addCombo(\RestaurantBundle\Entity\Combo $combos)
+    {
+        $this->combos[] = $combos;
+
+        return $this;
+    }
+
+    /**
+     * Remove combos
+     *
+     * @param \RestaurantBundle\Entity\Combo $combos
+     */
+    public function removeCombo(\RestaurantBundle\Entity\Combo $combos)
+    {
+        $this->combos->removeElement($combos);
+    }
+
+    /**
+     * Get combos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCombos()
+    {
+        return $this->combos;
     }
 }

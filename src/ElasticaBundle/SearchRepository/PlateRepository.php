@@ -13,6 +13,8 @@ class PlateRepository extends Repository {
             $amenities=null,
             $state = null,
             $city = null,
+            $minPrice = null,
+            $maxPrice = null,
             $menuRepository
             ){
         
@@ -27,14 +29,15 @@ class PlateRepository extends Repository {
         $queryId = new \Elastica\Query\BoolQuery();
         $queryId->setMinimumNumberShouldMatch(1);
         foreach($ids as $id){
-            $queryMatch1 = new \Elastica\Query\Term(array('menu.id' => array('value' => $id)));
+            $queryMatch1 = new \Elastica\Query\Term(array('menus.id' => array('value' => $id)));
             $queryId->addShould($queryMatch1);
         }
         
-        $query2=new \Elastica\Query\BoolQuery();
-        $query2->addShould($queryId);
-        $query2->setMinimumNumberShouldMatch(1);
-        $sche=$this->find($query2,10000);
+        $query2=new \Elastica\Query\Nested();
+        $query2->setPath('menus');
+        $query2->setQuery($queryId);
+//        $query2->setMinimumNumberShouldMatch(1);
+        $sche=$this->find($query2,10000);        
         $a = array();
         foreach($sche as $s){
             array_push($a, $s->getId());
@@ -45,14 +48,32 @@ class PlateRepository extends Repository {
         
         $query->addMust($querySI);
         
+        if($minPrice!=null){
+            $range1 = new \Elastica\Query\Range('price', array(
+                    'gte' => $minPrice
+                        )
+                );
+            $query->addMust($range1);
+        }
+        if($maxPrice!=null){
+            $range1 = new \Elastica\Query\Range('price', array(
+                    'lte' => $maxPrice
+                        )
+                );
+            $query->addMust($range1);
+        }
+        
+        
         $q = new \Elastica\Query();
-//        $q->addSort(array('startTime' => array('order' => 'asc')));
+        $q->addSort(array('reputationTotal' => array('order' => 'asc')));
         $q->setQuery($query);
         
         $plates = $this->createPaginatorAdapter($q);
         $response = $pagination->paginate($plates, $page, 10);
 
         return $response;
+        
+        
         }else{
             $query = new \Elastica\Query\MatchAll();
             $q = new \Elastica\Query();

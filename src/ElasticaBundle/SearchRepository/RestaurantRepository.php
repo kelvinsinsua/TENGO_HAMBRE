@@ -86,10 +86,13 @@ class RestaurantRepository extends Repository {
         
         $queryFiltered = new \Elastica\Query\Filtered($query, $filterLocation);
         
-        $studios = $this->find($queryFiltered,500);
+        $studios = $this->find($queryFiltered,1000);
         return $studios;
                 }
-        $studios = $this->createPaginatorAdapter($query);
+        $q = new \Elastica\Query();
+        $q->addSort(array('reputationTotal' => array('order' => 'desc')));
+        $q->setQuery($query);        
+        $studios = $this->createPaginatorAdapter($q);
         $response = $pagination->paginate($studios, $page, 10);
 
         return $response;

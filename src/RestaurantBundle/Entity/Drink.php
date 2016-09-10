@@ -55,6 +55,11 @@ class Drink
      */
        
     private $drinkCategory;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Combo", mappedBy="drinks")
+     */
+     private $combos;
 
     /**
      * Get id
@@ -179,5 +184,45 @@ class Drink
     public function getDrinkCategory()
     {
         return $this->drinkCategory;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->combos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add combos
+     *
+     * @param \RestaurantBundle\Entity\Combo $combos
+     * @return Drink
+     */
+    public function addCombo(\RestaurantBundle\Entity\Combo $combos)
+    {
+        $this->combos[] = $combos;
+
+        return $this;
+    }
+
+    /**
+     * Remove combos
+     *
+     * @param \RestaurantBundle\Entity\Combo $combos
+     */
+    public function removeCombo(\RestaurantBundle\Entity\Combo $combos)
+    {
+        $this->combos->removeElement($combos);
+    }
+
+    /**
+     * Get combos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCombos()
+    {
+        return $this->combos;
     }
 }

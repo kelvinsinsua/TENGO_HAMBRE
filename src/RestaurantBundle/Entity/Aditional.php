@@ -41,6 +41,11 @@ class Aditional
      */
        
     private $restaurant;
+    
+     /**
+     * @ORM\ManyToMany(targetEntity="Plate", mappedBy="aditionals")
+     */
+     private $plates;
 
 
     /**
@@ -120,5 +125,45 @@ class Aditional
     public function getRestaurant()
     {
         return $this->restaurant;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->plates = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add plates
+     *
+     * @param \RestaurantBundle\Entity\Plate $plates
+     * @return Aditional
+     */
+    public function addPlate(\RestaurantBundle\Entity\Plate $plates)
+    {
+        $this->plates[] = $plates;
+
+        return $this;
+    }
+
+    /**
+     * Remove plates
+     *
+     * @param \RestaurantBundle\Entity\Plate $plates
+     */
+    public function removePlate(\RestaurantBundle\Entity\Plate $plates)
+    {
+        $this->plates->removeElement($plates);
+    }
+
+    /**
+     * Get plates
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPlates()
+    {
+        return $this->plates;
     }
 }

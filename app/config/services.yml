@@ -47,10 +47,55 @@ services:
         parent:    "api.resource"
         arguments: [ "RestaurantBundle\\Entity\\Aditional" ]
         tags:      [ { name: "api.resource" } ]
+    resource.reputationplate:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\ReputationPlate" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.reputationrestaurant:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\ReputationRestaurant" ]
+        tags:      [ { name: "api.resource" } ]
     resource.client:
         parent:    "api.resource"
         arguments: [ "UserBundle\\Entity\\Client" ]
         tags:      [ { name: "api.resource" } ]
+    resource.menucategories:
+        parent:    "api.resource"
+        arguments: [ "ParametersBundle\\Entity\\MenuCategory" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.orden:
+        parent:    "api.resource"
+        arguments: [ "OrderBundle\\Entity\\Orden" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.item:
+        parent:    "api.resource"
+        arguments: [ "OrderBundle\\Entity\\Item" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.aditionalitem:
+        parent:    "api.resource"
+        arguments: [ "OrderBundle\\Entity\\AditionalItem" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.without:
+        parent:    "api.resource"
+        arguments: [ "OrderBundle\\Entity\\Without" ]
+        tags:      [ { name: "api.resource" } ]
+    
+    
+    app.event_listener.populate_listener:
+        class: AppBundle\EventListener\PopulateListener
+        tags:
+            - { name: kernel.event_listener, event: elastica.index.index_pre_populate, method: preIndexPopulate}
+            - { name: kernel.event_listener, event: elastica.index.index_post_populate, method: postIndexPopulate}
+        arguments: ["@fos_elastica.index_manager"]
+        
+    reputation_crud_listener:
+        class: "RestaurantBundle\EventListener\ReputationCrudListener"
+        tags:  
+            -  { name: "kernel.event_listener", event: "api.pre_create", method: "onPreCreate" }
+            -  { name: "kernel.event_listener", event: "api.pre_update", method: "onPreUpdate" }
+            -  { name: "kernel.event_listener", event: "api.post_create", method: "onPostCreate" }
+            -  { name: "kernel.event_listener", event: "api.post_update", method: "onPostUpdate" }
+        arguments: [ @doctrine.orm.entity_manager ]
         
     app.jwt_token_authenticator:
         class: AppBundle\Security\JwtAuthenticator

@@ -74,7 +74,7 @@ class Client
      * @ORM\OneToMany(targetEntity="Preference", mappedBy="client")
      */
     
-    private $preference;
+    private $preferences;
     
     /**
      * @ORM\OneToMany(targetEntity="\OrderBundle\Entity\Orden", mappedBy="client")
@@ -261,39 +261,6 @@ class Client
     }
 
     /**
-     * Add preference
-     *
-     * @param \UserBundle\Entity\Preference $preference
-     * @return Client
-     */
-    public function addPreference(\UserBundle\Entity\Preference $preference)
-    {
-        $this->preference[] = $preference;
-
-        return $this;
-    }
-
-    /**
-     * Remove preference
-     *
-     * @param \UserBundle\Entity\Preference $preference
-     */
-    public function removePreference(\UserBundle\Entity\Preference $preference)
-    {
-        $this->preference->removeElement($preference);
-    }
-
-    /**
-     * Get preference
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPreference()
-    {
-        return $this->preference;
-    }
-
-    /**
      * Add orders
      *
      * @param \OrderBundle\Entity\Order $orders
@@ -324,5 +291,38 @@ class Client
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Add preferences
+     *
+     * @param \UserBundle\Entity\Preference $preferences
+     * @return Client
+     */
+    public function addPreference(\UserBundle\Entity\Preference $preferences)
+    {
+        $this->preferences[] = $preferences;
+
+        return $this;
+    }
+
+    /**
+     * Remove preferences
+     *
+     * @param \UserBundle\Entity\Preference $preferences
+     */
+    public function removePreference(\UserBundle\Entity\Preference $preferences)
+    {
+        $this->preferences->removeElement($preferences);
+    }
+
+    /**
+     * Get preferences
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPreferences()
+    {
+        return $this->preferences;
     }
 }

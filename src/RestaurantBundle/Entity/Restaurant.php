@@ -132,10 +132,22 @@ class Restaurant
     private $lon;
     
     /**
+     * @var float
+     *
+     * @ORM\Column(name="reputationTotal", type="float")
+     */
+    private $reputationTotal;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Menu", mappedBy="restaurant")
      */
     
     private $menus;
+    /**
+     * @ORM\OneToMany(targetEntity="Combo", mappedBy="restaurant")
+     */
+    
+    private $combos;
     /**
      * @ORM\OneToMany(targetEntity="Schedule", mappedBy="restaurant")
      */
@@ -164,6 +176,12 @@ class Restaurant
      * @ORM\JoinTable(name="studios_amenities")
      */
     protected $amenities;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ReputationRestaurant", mappedBy="restaurant")
+     */
+    
+    private $reputations;
 
     
     public function getLocation()
@@ -766,5 +784,94 @@ class Restaurant
     public function getDrinkCategories()
     {
         return $this->drinkCategories;
+    }
+
+    /**
+     * Set reputationTotal
+     *
+     * @param float $reputationTotal
+     * @return Restaurant
+     */
+    public function setReputationTotal($reputationTotal)
+    {
+        $this->reputationTotal = $reputationTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get reputationTotal
+     *
+     * @return float 
+     */
+    public function getReputationTotal()
+    {
+        return $this->reputationTotal;
+    }
+
+    /**
+     * Add reputations
+     *
+     * @param \RestaurantBundle\Entity\ReputationRestaurant $reputations
+     * @return Restaurant
+     */
+    public function addReputation(\RestaurantBundle\Entity\ReputationRestaurant $reputations)
+    {
+        $this->reputations[] = $reputations;
+
+        return $this;
+    }
+
+    /**
+     * Remove reputations
+     *
+     * @param \RestaurantBundle\Entity\ReputationRestaurant $reputations
+     */
+    public function removeReputation(\RestaurantBundle\Entity\ReputationRestaurant $reputations)
+    {
+        $this->reputations->removeElement($reputations);
+    }
+
+    /**
+     * Get reputations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReputations()
+    {
+        return $this->reputations;
+    }
+
+    /**
+     * Add combos
+     *
+     * @param \RestaurantBundle\Entity\Combo $combos
+     * @return Restaurant
+     */
+    public function addCombo(\RestaurantBundle\Entity\Combo $combos)
+    {
+        $this->combos[] = $combos;
+
+        return $this;
+    }
+
+    /**
+     * Remove combos
+     *
+     * @param \RestaurantBundle\Entity\Combo $combos
+     */
+    public function removeCombo(\RestaurantBundle\Entity\Combo $combos)
+    {
+        $this->combos->removeElement($combos);
+    }
+
+    /**
+     * Get combos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCombos()
+    {
+        return $this->combos;
     }
 }

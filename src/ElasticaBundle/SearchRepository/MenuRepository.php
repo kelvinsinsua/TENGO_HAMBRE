@@ -12,7 +12,7 @@ class MenuRepository extends Repository {
              
         
             
-            $queryTerm=new \Elastica\Query\Term(array('dtate' => array('value' => $state)));          
+            $queryTerm=new \Elastica\Query\Term(array('state' => array('value' => $state)));          
             $query->addMust($queryTerm);
         
          }

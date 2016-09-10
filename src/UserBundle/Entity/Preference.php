@@ -27,13 +27,6 @@ class Preference
      * @ORM\Column(name="idCategory", type="integer")
      */
     private $idCategory;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
     
     /**
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="preferences")
@@ -76,28 +69,6 @@ class Preference
         return $this->idCategory;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Preference
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
 
     /**
      * Set client

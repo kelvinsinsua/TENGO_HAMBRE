@@ -108,7 +108,8 @@ class RestaurantController extends FOSRestController implements
         $normalizer->setIgnoredAttributes(array(
             'user',
             'aditionals',
-            'schedules'
+            'schedules',
+            'reputations'
             ));
         $em=$this->getDoctrine()->getManager();
         foreach($entity as $ent){
@@ -124,6 +125,9 @@ class RestaurantController extends FOSRestController implements
              }
             
         }
+        $normalizer->setIgnoredAttributes(array(
+            'combos'
+            ));
         $jsonEntity=$serializer->serialize($entity, 'json');
         
         return $jsonEntity;

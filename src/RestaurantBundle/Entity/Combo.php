@@ -5,12 +5,12 @@ namespace RestaurantBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Menu
+ * Combo
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Menu
+class Combo
 {
     /**
      * @var integer
@@ -24,34 +24,34 @@ class Menu
     /**
      * @var string
      *
-     * @ORM\Column(name="about", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $about;
+    private $name;
 
     /**
-     * @var boolean
+     * @var float
      *
-     * @ORM\Column(name="available", type="boolean")
+     * @ORM\Column(name="total", type="float")
      */
-    private $available;
+    private $total;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="menus")
+     * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="combos")
      * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id")
      */
        
     private $restaurant;
-    /**
-     * @ORM\ManyToOne(targetEntity="\ParametersBundle\Entity\MenuCategory", inversedBy="menus")
-     * @ORM\JoinColumn(name="menu_category_id", referencedColumnName="id")
-     */
-       
-    private $menuCategory;
     
-    /**
-     * @ORM\ManyToMany(targetEntity="Plate", mappedBy="menus")
+     /**
+     * @ORM\ManyToMany(targetEntity="Plate", inversedBy="combos")
+     * @ORM\JoinTable(name="combos_plates")
      */
-     private $plates;
+    protected $plates;
+     /**
+     * @ORM\ManyToMany(targetEntity="Drink", inversedBy="combos")
+     * @ORM\JoinTable(name="combos_drinks")
+     */
+    protected $drinks;
 
 
     /**
@@ -65,49 +65,49 @@ class Menu
     }
 
     /**
-     * Set about
+     * Set name
      *
-     * @param string $about
-     * @return Menu
+     * @param string $name
+     * @return Combo
      */
-    public function setAbout($about)
+    public function setName($name)
     {
-        $this->about = $about;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get about
+     * Get name
      *
      * @return string 
      */
-    public function getAbout()
+    public function getName()
     {
-        return $this->about;
+        return $this->name;
     }
 
     /**
-     * Set available
+     * Set total
      *
-     * @param boolean $available
-     * @return Menu
+     * @param float $total
+     * @return Combo
      */
-    public function setAvailable($available)
+    public function setTotal($total)
     {
-        $this->available = $available;
+        $this->total = $total;
 
         return $this;
     }
 
     /**
-     * Get available
+     * Get total
      *
-     * @return boolean 
+     * @return float 
      */
-    public function getAvailable()
+    public function getTotal()
     {
-        return $this->available;
+        return $this->total;
     }
     /**
      * Constructor
@@ -121,7 +121,7 @@ class Menu
      * Set restaurant
      *
      * @param \RestaurantBundle\Entity\Restaurant $restaurant
-     * @return Menu
+     * @return Combo
      */
     public function setRestaurant(\RestaurantBundle\Entity\Restaurant $restaurant = null)
     {
@@ -140,13 +140,11 @@ class Menu
         return $this->restaurant;
     }
 
-    
-
     /**
      * Add plates
      *
      * @param \RestaurantBundle\Entity\Plate $plates
-     * @return Menu
+     * @return Combo
      */
     public function addPlate(\RestaurantBundle\Entity\Plate $plates)
     {
@@ -176,25 +174,35 @@ class Menu
     }
 
     /**
-     * Set menuCategory
+     * Add drinks
      *
-     * @param \ParametersBundle\Entity\MenuCategory $menuCategory
-     * @return Menu
+     * @param \RestaurantBundle\Entity\Drink $drinks
+     * @return Combo
      */
-    public function setMenuCategory(\ParametersBundle\Entity\MenuCategory $menuCategory = null)
+    public function addDrink(\RestaurantBundle\Entity\Drink $drinks)
     {
-        $this->menuCategory = $menuCategory;
+        $this->drinks[] = $drinks;
 
         return $this;
     }
 
     /**
-     * Get menuCategory
+     * Remove drinks
      *
-     * @return \ParametersBundle\Entity\MenuCategory 
+     * @param \RestaurantBundle\Entity\Drink $drinks
      */
-    public function getMenuCategory()
+    public function removeDrink(\RestaurantBundle\Entity\Drink $drinks)
     {
-        return $this->menuCategory;
+        $this->drinks->removeElement($drinks);
+    }
+
+    /**
+     * Get drinks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDrinks()
+    {
+        return $this->drinks;
     }
 }

@@ -31,21 +31,25 @@ class PlatesController extends FOSRestController implements
         
         $state=$request->get('state');
         $city=$request->get('city');
+        $minPrice=$request->get('minPrice');
+        $maxPrice=$request->get('maxPrice');
         $categories=json_decode($request->get('categories'));
         $amenities=json_decode($request->get('amenities'));
         $page=$request->get('page');
         $pagination = $this->get('knp_paginator');
-        $menuRepository = $this->menusRepository();
+        $menuRepository = $this->menuRepository();
         
         //1=PAGINATION  2=NUMERO DE PAGINA 3=ACTIVIDADES 4=COMODIDADES
         //5=ESTADO  6=CIUDADES
-        $plates = $this->restaurantRepository()->searchRestaurant(
+        $plates = $this->plateRepository()->searchPlate(
                 $pagination,
                 $page,
                 $categories,
                 $amenities,
                 $state,
                 $city,
+                $minPrice,
+                $maxPrice,
                 $menuRepository
                 );   
         
@@ -54,14 +58,14 @@ class PlatesController extends FOSRestController implements
         
     }
     
-     public function platesRepository(){
+     public function plateRepository(){
         
         $repositoryManager = $this->container->get('fos_elastica.manager');
-        $repository = $repositoryManager->getRepository('RestaurantBundle:Plates');
+        $repository = $repositoryManager->getRepository('RestaurantBundle:Plate');
         return $repository;
         
     }
-     public function menusRepository(){
+     public function menuRepository(){
         
         $repositoryManager = $this->container->get('fos_elastica.manager');
         $repository = $repositoryManager->getRepository('RestaurantBundle:Menu');
@@ -75,11 +79,17 @@ class PlatesController extends FOSRestController implements
         $serializer = new Serializer(array($normalizer), array($encoder));
 
         foreach ($entity as $ent) {
-            foreach ($ent->getMenu()->getRestaurant()->getAmenities() as $amenity) {
+            foreach ($ent->getRestaurant()->getAmenities() as $amenity) {
                 $normalizer->setIgnoredAttributes(array(
                     'restaurant'
                 ));
                 $jsonEntity = $serializer->serialize($amenity, 'json');
+            }
+            foreach ($ent->getRestaurant()->getSchedules() as $sc) {
+                $normalizer->setIgnoredAttributes(array(
+                    'restaurant'
+                ));
+                $jsonEntity = $serializer->serialize($sc, 'json');
             }
             $normalizer->setIgnoredAttributes(array(
                 'user',
@@ -93,41 +103,56 @@ class PlatesController extends FOSRestController implements
                 'deletedAt',
                 'lat',
                 'lon',
+                'drinkCategories',
+                'reputations',
+                'aditionals',
+                'combos'
             ));
             $em = $this->getDoctrine()->getManager();
-            if ($ent->getMenu()->getRestaurant()->getState() != null) {
-                $state = $em->getRepository('VnzlaStatesBundle:State')->find($ent->getMenu()->getRestaurant()->getState());
-                $ent->getMenu()->getRestaurant()->setStateName($state->getState());
+            if ($ent->getRestaurant()->getState() != null) {
+                $state = $em->getRepository('VnzlaStatesBundle:State')->find($ent->getRestaurant()->getState());
+                $ent->getRestaurant()->setStateName($state->getState());
             }
 
-            if ($ent->getMenu()->getRestaurant()->getCity() != null) {
-                $city = $em->getRepository('VnzlaStatesBundle:City')->find($ent->getMenu()->getRestaurant()->getCity());
+            if ($ent->getRestaurant()->getCity() != null) {
+                $city = $em->getRepository('VnzlaStatesBundle:City')->find($ent->getRestaurant()->getCity());
 
 
-                $ent->getMenu()->getRestaurant()->setCityName($city->getCity());
+                $ent->getRestaurant()->setCityName($city->getCity());
             }
-
-            $jsonEntity = $serializer->serialize($ent->getMenu()->getRestaurant(), 'json');
+            
+            $jsonEntity = $serializer->serialize($ent->getRestaurant(), 'json');
+            foreach ($ent->getMenus() as $menu){
             $normalizer->setIgnoredAttributes(array(
                 'menus'
             ));
-            $jsonEntity = $serializer->serialize($ent->getMenu()->getMenuCategory(), 'json');
+            
+            
+            $jsonEntity = $serializer->serialize($menu->getMenuCategory(), 'json');
+            }
             $normalizer->setIgnoredAttributes(array(
                 'plates',
-                'about',
                 'available',
-                'name',
-                'id'
+                'id',
+                'restaurant'
             ));
-            $jsonEntity = $serializer->serialize($ent->getMenu(), 'json');
-            
+            $jsonEntity = $serializer->serialize($ent->getMenus(), 'json');
+            foreach($ent->getAditionals() as $add){
+                $normalizer->setIgnoredAttributes(array(
+                    'restaurant',
+                    'plates'
+            ));
+            $jsonEntity = $serializer->serialize($add, 'json');
+            }
             
         
         }
 
         
         $normalizer->setIgnoredAttributes(array(
-            'ingredients'
+            'ingredients',
+            'reputations',
+            'combos'
         ));
         $jsonEntity = $serializer->serialize($entity, 'json');
 

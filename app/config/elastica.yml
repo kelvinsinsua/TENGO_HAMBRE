@@ -10,6 +10,7 @@ fos_elastica:
                         name: ~
                         state: ~
                         city: ~
+                        reputationTotal: ~
                         amenities:
                             type: nested
                             properties:
@@ -47,6 +48,7 @@ fos_elastica:
                         name: ~
                         available: { type: boolean }
                         price: ~
+                        reputationTotal: ~
                         menus:
                             type: nested
                             properties:
@@ -59,6 +61,18 @@ fos_elastica:
                         listener: ~
                         finder: ~
                         repository: ElasticaBundle\SearchRepository\PlateRepository
+                ingredient:
+                    mappings:
+                        name: ~
+                    _parent:
+                        type: plate
+                    persistence:
+                        driver: orm
+                        model: RestaurantBundle\Entity\Ingredient
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                        repository: ElasticaBundle\SearchRepository\ingredientRepository
                 state:
                     mappings:
                         state: ~
