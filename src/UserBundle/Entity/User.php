@@ -68,8 +68,7 @@ class User extends BaseUser
     private $restaurant;
     
     /**
-     * @ORM\OneToOne(targetEntity="Client", inversedBy="user")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Client", mappedBy="user")
      */
        
     private $client;

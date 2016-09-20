@@ -5,6 +5,16 @@ fos_elastica:
         tengo_hambre:
             index_name: tengo_hambre
             types:
+                client:
+                    mappings:
+                        firstname: ~                        
+                    persistence:
+                        driver: orm
+                        model: UserBundle\Entity\Client
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                        repository: ElasticaBundle\SearchRepository\ClientRepository
                 restaurant:
                     mappings:
                         name: ~
