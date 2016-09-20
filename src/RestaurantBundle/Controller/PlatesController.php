@@ -57,6 +57,31 @@ class PlatesController extends FOSRestController implements
         return new JsonResponse($r);
         
     }
+    /**
+     * GET Route annotation.
+     * @Get("/api/findplate")
+     */
+    public function getPlateAction(
+            Request $request
+            ) {
+        
+        $id=$request->get('id');
+        
+        if(true === $this->get('security.authorization_checker')->isGranted('ROLE_CLIENT')){
+//            $user = $this->get('security.token_storage')->getToken()->getUser();
+//            $id=$user->getRestaurant()->getId();
+        }
+        if($id==null){
+            throw new BadRequestHttpException(); 
+        }
+        $plates = $this->plateRepository()->searchID(
+                $id
+                );   
+        
+        $r = $this->encoder($plates);
+        return new JsonResponse($r);
+        
+    }
     
      public function plateRepository(){
         

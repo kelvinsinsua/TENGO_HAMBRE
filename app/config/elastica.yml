@@ -27,7 +27,6 @@ fos_elastica:
                         repository: ElasticaBundle\SearchRepository\RestaurantRepository
                 menu:
                     mappings:
-                        name: ~
                         available: { type: boolean }
                         menuCategory:
                             type: object

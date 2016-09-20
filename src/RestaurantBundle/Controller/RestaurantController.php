@@ -57,6 +57,29 @@ class RestaurantController extends FOSRestController implements
         return new JsonResponse($r);
         
     }
+    /**
+     * GET Route annotation.
+     * @Get("/api/findrestaurant")
+     */
+    public function getRestaurantAction(
+            Request $request
+            ) {
+        
+        $id=$request->get('id');
+        
+        if(true === $this->get('security.authorization_checker')->isGranted('ROLE_RESTAURANT')){
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $id=$user->getRestaurant()->getId();
+        }
+        if($id==null){
+            throw new BadRequestHttpException(); 
+        }
+        $restaurant = $this->restaurantRepository()->searchID($id);
+        $r = $this->encoder1($restaurant[0]);
+        
+        return new JsonResponse($r);
+        
+    }
     
     public function restaurantRepository(){
         
@@ -128,6 +151,73 @@ class RestaurantController extends FOSRestController implements
         $normalizer->setIgnoredAttributes(array(
             'combos'
             ));
+        $jsonEntity=$serializer->serialize($entity, 'json');
+        
+        return $jsonEntity;
+        
+    }
+    
+    public function encoder1($entity) {
+       
+        $encoder = new JsonEncoder();
+        $normalizer = new ObjectNormalizer();      
+        
+        $serializer = new Serializer(array($normalizer), array($encoder));
+        
+        
+        foreach($entity->getAmenities() as $amenity){
+            $normalizer->setIgnoredAttributes(array(
+            'restaurant'
+            ));
+            
+            $jsonEntity=$serializer->serialize($amenity, 'json');
+        }
+        foreach($entity->getMenus() as $menu){
+            $normalizer->setIgnoredAttributes(array(
+            'menus',
+                'imageFile'
+            ));
+            
+            $jsonEntity=$serializer->serialize($menu->getMenuCategory(), 'json');
+            $normalizer->setIgnoredAttributes(array(
+            'restaurant',
+            'plates'
+            ));
+            
+            $jsonEntity=$serializer->serialize($menu, 'json');
+        }
+        
+        foreach($entity->getSchedules() as $sche){
+            $normalizer->setIgnoredAttributes(array(
+            'restaurant'
+            ));
+            
+            $jsonEntity=$serializer->serialize($sche, 'json');
+        }
+        
+        $normalizer->setIgnoredAttributes(array(
+            'user',
+            'clients',
+            'reputations',
+            'drinkCategories',
+            'aditionals',
+            'combos',
+            ));
+        $em=$this->getDoctrine()->getManager();
+        
+        if($entity->getState()!=null){
+        $state = $em->getRepository('VnzlaStatesBundle:State')->find($entity->getState());
+            $entity->setStateName($state->getState());
+        
+            }
+             if($entity->getCity()!=null){
+        $city = $em->getRepository('VnzlaStatesBundle:City')->find($entity->getCity());       
+        
+        $entity->setCityName($city->getCity());
+             }
+        
+        
+        
         $jsonEntity=$serializer->serialize($entity, 'json');
         
         return $jsonEntity;

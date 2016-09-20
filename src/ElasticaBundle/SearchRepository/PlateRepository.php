@@ -89,4 +89,12 @@ class PlateRepository extends Repository {
         
     }
     
+    public function searchID($ids) {
+        $query = new \Elastica\Query\Ids();
+        $query->setIds($ids);
+        $results = $this->find($query,100);
+
+        return $results;
+    }
+    
 }
