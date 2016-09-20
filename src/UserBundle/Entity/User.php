@@ -61,14 +61,15 @@ class User extends BaseUser
     public $roles;
     
     /**
-     * @ORM\OneToOne(targetEntity="RestaurantBundle\Entity\Restaurant", inversedBy="user")
-     * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="RestaurantBundle\Entity\Restaurant", mappedBy="user")
+     * @Groups({"user_read", "user_write"})
      */
        
     private $restaurant;
     
     /**
      * @ORM\OneToOne(targetEntity="Client", mappedBy="user")
+     * @Groups({"user_read", "user_write"})
      */
        
     private $client;
