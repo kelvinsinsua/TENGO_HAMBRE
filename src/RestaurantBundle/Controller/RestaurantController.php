@@ -80,11 +80,42 @@ class RestaurantController extends FOSRestController implements
         return new JsonResponse($r);
         
     }
+    /**
+     * GET Route annotation.
+     * @Get("/api/findrestaurant/reputation")
+     */
+    public function getRestaurantCommentsAction(
+            Request $request
+            ) {
+        
+        $id=$request->get('id');
+        $page=$request->get('page');
+        $pagination = $this->get('knp_paginator');
+        if(true === $this->get('security.authorization_checker')->isGranted('ROLE_RESTAURANT')){
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $id=$user->getRestaurant()->getId();
+        }
+        if($id==null){
+            throw new BadRequestHttpException(); 
+        }
+        $reputations = $this->reputationRestaurantRepository()->searchReputation($pagination,$page,$id);
+        $r = $this->encoderReputation($reputations);
+        
+        return new JsonResponse($r);
+        
+    }
     
     public function restaurantRepository(){
         
         $repositoryManager = $this->container->get('fos_elastica.manager');
         $repository = $repositoryManager->getRepository('RestaurantBundle:Restaurant');
+        return $repository;
+        
+    }
+    public function reputationRestaurantRepository(){
+        
+        $repositoryManager = $this->container->get('fos_elastica.manager');
+        $repository = $repositoryManager->getRepository('RestaurantBundle:ReputationRestaurant');
         return $repository;
         
     }
@@ -219,6 +250,22 @@ class RestaurantController extends FOSRestController implements
         
         
         $jsonEntity=$serializer->serialize($entity, 'json');
+        
+        return $jsonEntity;
+        
+    }
+    public function encoderReputation($entity) {
+       
+        $encoder = new JsonEncoder();
+        $normalizer = new ObjectNormalizer();      
+        
+        $serializer = new Serializer(array($normalizer), array($encoder));       
+      
+            $normalizer->setIgnoredAttributes(array(
+            'restaurant'
+            ));
+            
+            $jsonEntity=$serializer->serialize($entity, 'json');
         
         return $jsonEntity;
         

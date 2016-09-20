@@ -82,11 +82,46 @@ class PlatesController extends FOSRestController implements
         return new JsonResponse($r);
         
     }
+    /**
+     * GET Route annotation.
+     * @Get("/api/findplate/reputation")
+     */
+    public function getPlateCommentsAction(
+            Request $request
+            ) {
+        
+        $id=$request->get('id');
+        $page=$request->get('page');
+        $pagination = $this->get('knp_paginator');
+        if(true === $this->get('security.authorization_checker')->isGranted('ROLE_CLIENT')){
+//            $user = $this->get('security.token_storage')->getToken()->getUser();
+//            $id=$user->getRestaurant()->getId();
+        }
+        if($id==null){
+            throw new BadRequestHttpException(); 
+        }
+        $reputations = $this->reputationPlateRepository()->searchReputation(
+                $pagination,
+                $page,
+                $id
+                );   
+        
+        $r = $this->encoderReputation($reputations);
+        return new JsonResponse($r);
+        
+    }
     
      public function plateRepository(){
         
         $repositoryManager = $this->container->get('fos_elastica.manager');
         $repository = $repositoryManager->getRepository('RestaurantBundle:Plate');
+        return $repository;
+        
+    }
+     public function reputationPlateRepository(){
+        
+        $repositoryManager = $this->container->get('fos_elastica.manager');
+        $repository = $repositoryManager->getRepository('RestaurantBundle:ReputationPlate');
         return $repository;
         
     }
@@ -183,6 +218,23 @@ class PlatesController extends FOSRestController implements
 
         return $jsonEntity;
         
+        
+    }
+    
+    public function encoderReputation($entity) {
+       
+        $encoder = new JsonEncoder();
+        $normalizer = new ObjectNormalizer();      
+        
+        $serializer = new Serializer(array($normalizer), array($encoder));       
+      
+            $normalizer->setIgnoredAttributes(array(
+            'plate'
+            ));
+            
+            $jsonEntity=$serializer->serialize($entity, 'json');
+        
+        return $jsonEntity;
         
     }
 }

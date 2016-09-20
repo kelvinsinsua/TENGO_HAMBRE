@@ -290,6 +290,22 @@ class Plate
     {
         return $this->menus;
     }
+    
+    /**
+     * 
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function setMenus(array $menus)
+    {
+        $this->menus = array();
+
+        foreach ($menus as $menu) {
+            $this->addMenu($menu);
+        }
+
+        return $this;
+    }
 
     /**
      * Add aditionals

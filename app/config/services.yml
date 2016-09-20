@@ -55,9 +55,25 @@ services:
         parent:    "api.resource"
         arguments: [ "RestaurantBundle\\Entity\\ReputationRestaurant" ]
         tags:      [ { name: "api.resource" } ]
+    resource.drinkCategory:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\DrinkCategory" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.drink:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\Combo" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.combo:
+        parent:    "api.resource"
+        arguments: [ "RestaurantBundle\\Entity\\Drink" ]
+        tags:      [ { name: "api.resource" } ]
     resource.client:
         parent:    "api.resource"
         arguments: [ "UserBundle\\Entity\\Client" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.preferences:
+        parent:    "api.resource"
+        arguments: [ "UserBundle\\Entity\\Preference" ]
         tags:      [ { name: "api.resource" } ]
     resource.menucategories:
         parent:    "api.resource"
@@ -79,6 +95,7 @@ services:
         parent:    "api.resource"
         arguments: [ "OrderBundle\\Entity\\Without" ]
         tags:      [ { name: "api.resource" } ]
+    
     
     
     app.event_listener.populate_listener:

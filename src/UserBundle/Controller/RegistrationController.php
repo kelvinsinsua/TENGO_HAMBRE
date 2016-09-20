@@ -10,6 +10,8 @@ use FOS\UserBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations\Post;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use RestaurantBundle\Entity\Restaurant;
+use UserBundle\Entity\Client;
 
 class RegistrationController extends Controller {
 
@@ -40,20 +42,37 @@ class RegistrationController extends Controller {
             $response = ['valid' => true];
             
             //return $this->render('UserBundle:Registration:email.txt.twig', array('user' => $user,'confirmationUrl'=> 'https://www.google.co.ve/?gws_rd=ssl'));
+            if ($user->getRoles()[0] === "ROLE_CLIENT") {
+                $firstname = $request->get("firstname");
+                $lastname = $request->get("lastname");
+                $phone = $request->get("phone");
+                $client = new Client();
+                $client->setUser($user);
+                $client->setFirstName($firstname);
+                $client->setLastName($lastname);
+                $client->setPhone($phone);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($client);
+                $em->flush();
+                
+            } else if ($user->getRoles()[0] === "ROLE_RESTAURANT") {
+                $restaurant = new Restaurant();
+                $restaurant->setUser($user);
+                $restaurant->setReputationTotal(2.5);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($restaurant);
+                $em->flush();
+            }
             return new JsonResponse($response);
-            //return $response;
+            
         } else {
             $code = 400;
         }
 
         $response = $process;
-
         $return = new JsonResponse($response, $code);
-        //return $this->render('UserBundle:Registration:checkEmail.html.twig', array('user' => $user, 'rol' => implode(";", $user->getRoles()) ,'confirmationUrl'=> 'https://www.google.co.ve/?gws_rd=ssl'));
         return $return;
-        // return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:register.html.'.$this->getEngine(), array(
-//            'form' => $form->createView(),
-//        ));
+       
     }
 
     /**

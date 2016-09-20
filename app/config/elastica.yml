@@ -82,6 +82,32 @@ fos_elastica:
                         listener: ~
                         finder: ~
                         repository: ElasticaBundle\SearchRepository\ingredientRepository
+                reputationPlate:
+                    mappings:
+                        calification: {type: integer}
+                        date: {type: date}
+                    _parent:
+                        type: plate
+                    persistence:
+                        driver: orm
+                        model: RestaurantBundle\Entity\ReputationPlate
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                        repository: ElasticaBundle\SearchRepository\ReputationPlateRepository
+                reputationRestaurant:
+                    mappings:
+                        calification: {type: integer}
+                        date: {type: date}
+                    _parent:
+                        type: restaurant
+                    persistence:
+                        driver: orm
+                        model: RestaurantBundle\Entity\ReputationRestaurant
+                        provider: ~
+                        listener: ~
+                        finder: ~
+                        repository: ElasticaBundle\SearchRepository\ReputationRestaurantRepository
                 state:
                     mappings:
                         state: ~

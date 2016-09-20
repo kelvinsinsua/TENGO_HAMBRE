@@ -172,6 +172,22 @@ class Combo
     {
         return $this->plates;
     }
+    
+     /**
+     * 
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function setPlates(array $plates)
+    {
+        $this->plates = array();
+
+        foreach ($plates as $plate) {
+            $this->addPlate($plate);
+        }
+
+        return $this;
+    }
 
     /**
      * Add drinks
@@ -204,5 +220,21 @@ class Combo
     public function getDrinks()
     {
         return $this->drinks;
+    }
+    
+     /**
+     * 
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function setDrinks(array $drinks)
+    {
+        $this->drinks = array();
+
+        foreach ($drinks as $drink) {
+            $this->addDrink($drink);
+        }
+
+        return $this;
     }
 }

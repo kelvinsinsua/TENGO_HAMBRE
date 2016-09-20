@@ -24,42 +24,42 @@ class Client
     /**
      * @var string
      *
-     * @ORM\Column(name="firstname", type="string", length=255)
+     * @ORM\Column(name="firstname", type="string", length=255, nullable=true)
      */
     private $firstname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastname", type="string", length=255)
+     * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
      */
     private $lastname;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="gender", type="boolean")
+     * @ORM\Column(name="gender", type="boolean", nullable=true)
      */
     private $gender;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="state", type="integer")
+     * @ORM\Column(name="state", type="integer", nullable=true)
      */
     private $state;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="city", type="integer")
+     * @ORM\Column(name="city", type="integer", nullable=true)
      */
     private $city;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      */
     private $phone;
     
