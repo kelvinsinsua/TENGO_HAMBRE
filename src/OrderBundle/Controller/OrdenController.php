@@ -82,7 +82,7 @@ class OrdenController extends FOSRestController implements
         $order->setTotal($total);
         $em->flush();
         
-        return new JsonResponse('Su Orden NO ha sido Registrada con Exito');
+        return new JsonResponse('Su Orden ha sido Registrada con Exito');
         }  catch (\Exception $e){
             return new JsonResponse('Su Orden NO ha sido Registrada');
         }

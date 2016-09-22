@@ -137,6 +137,12 @@ class Restaurant
      * @ORM\Column(name="reputationTotal", type="float")
      */
     private $reputationTotal;
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="float")
+     */
+    private $priceToGo;
     
     /**
      * @ORM\OneToMany(targetEntity="Menu", mappedBy="restaurant")
@@ -873,5 +879,28 @@ class Restaurant
     public function getCombos()
     {
         return $this->combos;
+    }
+
+    /**
+     * Set priceToGo
+     *
+     * @param float $priceToGo
+     * @return Restaurant
+     */
+    public function setPriceToGo($priceToGo)
+    {
+        $this->priceToGo = $priceToGo;
+
+        return $this;
+    }
+
+    /**
+     * Get priceToGo
+     *
+     * @return float 
+     */
+    public function getPriceToGo()
+    {
+        return $this->priceToGo;
     }
 }

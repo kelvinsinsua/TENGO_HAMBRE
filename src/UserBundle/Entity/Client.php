@@ -81,6 +81,12 @@ class Client
      */
     
     private $orders;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="\OrderBundle\Entity\Cart", mappedBy="client")
+     */
+       
+    private $cart;
     /**
      * Get id
      *
@@ -324,5 +330,28 @@ class Client
     public function getPreferences()
     {
         return $this->preferences;
+    }
+
+    /**
+     * Set cart
+     *
+     * @param \OrderBundle\Entity\Cart $cart
+     * @return Client
+     */
+    public function setCart(\OrderBundle\Entity\Cart $cart = null)
+    {
+        $this->cart = $cart;
+
+        return $this;
+    }
+
+    /**
+     * Get cart
+     *
+     * @return \OrderBundle\Entity\Cart 
+     */
+    public function getCart()
+    {
+        return $this->cart;
     }
 }
