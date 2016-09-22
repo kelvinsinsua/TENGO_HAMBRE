@@ -67,6 +67,11 @@ class Orden
      */
     
     private $items;    
+    /**
+     * @ORM\OneToMany(targetEntity="ComboOrder", mappedBy="order")
+     */
+    
+    private $combos;    
     
     /**
      * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\Client", inversedBy="orders")
@@ -287,5 +292,38 @@ class Orden
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * Add combos
+     *
+     * @param \OrderBundle\Entity\ComboOrder $combos
+     * @return Orden
+     */
+    public function addCombo(\OrderBundle\Entity\ComboOrder $combos)
+    {
+        $this->combos[] = $combos;
+
+        return $this;
+    }
+
+    /**
+     * Remove combos
+     *
+     * @param \OrderBundle\Entity\ComboOrder $combos
+     */
+    public function removeCombo(\OrderBundle\Entity\ComboOrder $combos)
+    {
+        $this->combos->removeElement($combos);
+    }
+
+    /**
+     * Get combos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCombos()
+    {
+        return $this->combos;
     }
 }
