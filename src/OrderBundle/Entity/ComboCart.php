@@ -27,6 +27,12 @@ class ComboCart
      * @ORM\Column(name="idCombo", type="integer")
      */
     private $idCombo;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="quantity", type="integer")
+     */
+    private $quantity;
 
     /**
      * @var string
@@ -120,5 +126,28 @@ class ComboCart
     public function getCart()
     {
         return $this->cart;
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     * @return ComboCart
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer 
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 }

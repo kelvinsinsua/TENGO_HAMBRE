@@ -27,6 +27,12 @@ class PlateCart
      * @ORM\Column(name="idPlate", type="integer")
      */
     private $idPlate;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="quantity", type="integer")
+     */
+    private $quantity;
     
     /**
      * @ORM\ManyToOne(targetEntity="Cart", inversedBy="platesCart")
@@ -34,6 +40,7 @@ class PlateCart
      */
        
     private $cart;
+    
     
      /**
      * @ORM\OneToMany(targetEntity="WithoutCart", mappedBy="plateCart")
@@ -174,5 +181,28 @@ class PlateCart
     public function getAditionalItemsCart()
     {
         return $this->aditionalItemsCart;
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     * @return PlateCart
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer 
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 }

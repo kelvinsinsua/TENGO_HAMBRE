@@ -29,6 +29,13 @@ class AditionalItemCart
     private $idAditionalItem;
     
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="quantity", type="integer")
+     */
+    private $quantity;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="PlateCart", inversedBy="aditionalItemsCart")
      * @ORM\JoinColumn(name="plate_cart_id", referencedColumnName="id")
      */
@@ -90,5 +97,28 @@ class AditionalItemCart
     public function getPlateCart()
     {
         return $this->plateCart;
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     * @return AditionalItemCart
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer 
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 }

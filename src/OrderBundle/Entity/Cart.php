@@ -28,6 +28,13 @@ class Cart
      */
     private $description;
     /**
+     * @var string
+     *
+     * @ORM\Column(name="idRestaurant", type="integer")
+     */
+    private $idRestaurant;
+    
+    /**
      * @var float
      *
      * @ORM\Column( type="float")
@@ -204,5 +211,28 @@ class Cart
     public function getTotal()
     {
         return $this->total;
+    }
+
+    /**
+     * Set idRestaurant
+     *
+     * @param integer $idRestaurant
+     * @return Cart
+     */
+    public function setIdRestaurant($idRestaurant)
+    {
+        $this->idRestaurant = $idRestaurant;
+
+        return $this;
+    }
+
+    /**
+     * Get idRestaurant
+     *
+     * @return integer 
+     */
+    public function getIdRestaurant()
+    {
+        return $this->idRestaurant;
     }
 }
