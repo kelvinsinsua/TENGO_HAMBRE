@@ -95,6 +95,30 @@ services:
         parent:    "api.resource"
         arguments: [ "OrderBundle\\Entity\\Without" ]
         tags:      [ { name: "api.resource" } ]
+    resource.withoutCart:
+        parent:    "api.resource"
+        arguments: [ "OrderBundle\\Entity\\WithoutCart" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.aditionalItemCart:
+        parent:    "api.resource"
+        arguments: [ "OrderBundle\\Entity\\AditionalItemCart" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.cart:
+        parent:    "api.resource"
+        arguments: [ "OrderBundle\\Entity\\Cart" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.comboCart:
+        parent:    "api.resource"
+        arguments: [ "OrderBundle\\Entity\\ComboCart" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.comboOrder:
+        parent:    "api.resource"
+        arguments: [ "OrderBundle\\Entity\\ComboOrder" ]
+        tags:      [ { name: "api.resource" } ]
+    resource.plateCart:
+        parent:    "api.resource"
+        arguments: [ "OrderBundle\\Entity\\PlateCart" ]
+        tags:      [ { name: "api.resource" } ]
     
     
     
